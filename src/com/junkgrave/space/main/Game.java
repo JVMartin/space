@@ -2,6 +2,8 @@ package com.junkgrave.space.main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
 	public static final int width     = 800;
@@ -10,6 +12,8 @@ public class Game extends Canvas implements Runnable {
 
 	private boolean running = false;
 	private Thread thread;
+
+	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 	public Game() {
 		setPreferredSize(new Dimension(width, height));
@@ -38,8 +42,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
-		long lastTime, secondTimer;
-		lastTime = secondTimer = System.nanoTime();
+		long nextTick, secondTimer;
+		nextTick = secondTimer = System.nanoTime();
 
 		// Desired ticks per second.
 		final long desiredTPS = 60;
@@ -47,25 +51,25 @@ public class Game extends Canvas implements Runnable {
 		// Number of nanoseconds that need to pass between each tick.
 		long perTick = 1000000000 / desiredTPS;
 
-		// How many nanoseconds have passed since the last tick.
-		long sinceTick = 0;
+		// Actual frames per second.
+		int fps = 0;
 
 		// Actual ticks per second.
 		int tps = 0;
 
-		// Actual frames per second.
-		int fps = 0;
+		System.out.println("Desired number: " + perTick);
 
 		while (running) {
 			long now = System.nanoTime();
-			sinceTick += now - lastTime;
-			lastTime = now;
 
 			// The body of this if-block is executed at most 60 times per second.
-			if (sinceTick > perTick) {
+			if (now - nextTick >= 0) {
 				tick();
 				++tps;
-				sinceTick = 0;
+
+				do {
+					nextTick += perTick;
+				} while (now - nextTick >= 0);
 			}
 
 			render();
@@ -74,19 +78,27 @@ public class Game extends Canvas implements Runnable {
 			// The body of this if-block is executed once per second.
 			if (now - secondTimer > 1000000000) {
 				secondTimer = now;
-				System.out.println("FPS: " + fps + " UPDATES: " + tps);
-				tps = fps = 0;
+				System.out.println("FPS: " + fps + " TPS: " + tps);
+				fps = tps = 0;
 			}
 		}
 		stop();
 	}
 
 	private void tick() {
-
 	}
 
 	private void render() {
+		BufferStrategy bs = getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
 
+		Graphics g = bs.getDrawGraphics();
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		g.dispose();
+		bs.show();
 	}
 
 	public static void main(String [] args) {
