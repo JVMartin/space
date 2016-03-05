@@ -40,27 +40,42 @@ public class Game extends Canvas implements Runnable {
 	public void run() {
 		long timer = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
-		final double ticksPerSecond = 60;
-		double ns = 1000000000 / ticksPerSecond;
-		double delta = 0;
-		int updates = 0, frames = 0;
+
+		// Desired ticks per second.
+		final long desiredTPS = 60;
+
+		// Number of nanoseconds that need to pass between each tick.
+		long perTick = 1000000000 / desiredTPS;
+
+		// How many nanoseconds have passed since the last tick.
+		long sinceTick = 0;
+
+		// Actual ticks per second.
+		int tps = 0;
+
+		// Actual frames per second.
+		int fps = 0;
 
 		while (running) {
 			long now = System.nanoTime();
-			delta += (now - lastTime) / ns;
+			sinceTick += now - lastTime;
 			lastTime = now;
-			if (delta >= 1) {
-				tick();
-				++updates;
-				--delta;
-			}
-			render();
-			++frames;
 
+			// The body of this if-block is executed at most 60 times per second.
+			if (sinceTick > perTick) {
+				tick();
+				++tps;
+				sinceTick = 0;
+			}
+			
+			render();
+			++fps;
+
+			// The body of this if-block is executed once per second.
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS: " + frames + " UPDATES: " + updates);
-				updates = frames = 0;
+				System.out.println("FPS: " + fps + " UPDATES: " + tps);
+				tps = fps = 0;
 			}
 		}
 		stop();
