@@ -38,10 +38,40 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		long timer = System.currentTimeMillis();
+		long lastTime = System.nanoTime();
+		final double ticksPerSecond = 60;
+		double ns = 1000000000 / ticksPerSecond;
+		double delta = 0;
+		int updates = 0, frames = 0;
+
 		while (running) {
-			System.out.println("Hello!");
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta >= 1) {
+				tick();
+				++updates;
+				--delta;
+			}
+			render();
+			++frames;
+
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				System.out.println("FPS: " + frames + " UPDATES: " + updates);
+				updates = frames = 0;
+			}
 		}
 		stop();
+	}
+
+	private void tick() {
+
+	}
+
+	private void render() {
+
 	}
 
 	public static void main(String [] args) {
