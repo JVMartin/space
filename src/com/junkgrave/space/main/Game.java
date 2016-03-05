@@ -38,8 +38,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
-		long timer = System.currentTimeMillis();
-		long lastTime = System.nanoTime();
+		long lastTime, secondTimer;
+		lastTime = secondTimer = System.nanoTime();
 
 		// Desired ticks per second.
 		final long desiredTPS = 60;
@@ -67,13 +67,13 @@ public class Game extends Canvas implements Runnable {
 				++tps;
 				sinceTick = 0;
 			}
-			
+
 			render();
 			++fps;
 
 			// The body of this if-block is executed once per second.
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
+			if (now - secondTimer > 1000000000) {
+				secondTimer = now;
 				System.out.println("FPS: " + fps + " UPDATES: " + tps);
 				tps = fps = 0;
 			}
