@@ -20,7 +20,7 @@ public class Player {
 	}
 
 	public void tick() {
-
+		++x;
 	}
 
 	public void render(Graphics g) {

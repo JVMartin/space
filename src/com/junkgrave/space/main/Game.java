@@ -2,6 +2,7 @@ package com.junkgrave.space.main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -22,8 +23,11 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(new Dimension(width, height));
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
+
 		sheet  = new SpriteSheet("/sheet.png");
 		player = new Player(this);
+
+		addKeyListener(new KeyListener(this));
 	}
 
 	private synchronized void start() {
@@ -103,6 +107,25 @@ public class Game extends Canvas implements Runnable {
 		player.render(g);
 		g.dispose();
 		bs.show();
+	}
+
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		System.out.println(key);
+
+		switch (key) {
+			case KeyEvent.VK_LEFT:
+				break;
+			case KeyEvent.VK_RIGHT:
+				break;
+			case KeyEvent.VK_UP:
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
 	}
 
 	public static void main(String [] args) {
