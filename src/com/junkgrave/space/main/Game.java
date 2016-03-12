@@ -14,11 +14,16 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	public SpriteSheet sheet;
+
+	private Player player;
 
 	public Game() {
 		setPreferredSize(new Dimension(width, height));
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
+		sheet  = new SpriteSheet("/sheet.png");
+		player = new Player(this);
 	}
 
 	private synchronized void start() {
@@ -83,6 +88,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		player.tick();
 	}
 
 	private void render() {
@@ -94,6 +100,7 @@ public class Game extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		player.render(g);
 		g.dispose();
 		bs.show();
 	}
