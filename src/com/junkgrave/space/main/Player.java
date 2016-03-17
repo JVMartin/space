@@ -22,7 +22,13 @@ public class Player {
 	}
 
 	public void tick() {
-		x += velX;
+		if (velX < 0 && x <= 0) {
+			x = 0;
+		} else if (velX > 0 && x >= game.getWidth() - 32) {
+			x = game.getWidth() - 32;
+		} else {
+			x += velX;
+		}
 	}
 
 	public void goLeft() {
@@ -31,6 +37,10 @@ public class Player {
 
 	public void goRight() {
 		velX += 1;
+	}
+
+	public void stop() {
+		velX = 0;
 	}
 
 	public void render(Graphics g) {

@@ -127,6 +127,20 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+
+		switch (key) {
+			case KeyEvent.VK_LEFT:
+				player.stop();
+				break;
+			case KeyEvent.VK_RIGHT:
+				player.stop();
+				break;
+			case KeyEvent.VK_UP:
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+		}
 	}
 
 	public static void main(String [] args) {
