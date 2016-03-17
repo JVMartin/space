@@ -111,12 +111,13 @@ public class Game extends Canvas implements Runnable {
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		System.out.println(key);
 
 		switch (key) {
 			case KeyEvent.VK_LEFT:
+				player.goLeft();
 				break;
 			case KeyEvent.VK_RIGHT:
+				player.goRight();
 				break;
 			case KeyEvent.VK_UP:
 				break;

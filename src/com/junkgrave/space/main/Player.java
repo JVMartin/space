@@ -7,6 +7,7 @@ public class Player {
 	private Game game;
 	private int x;
 	private int y;
+	private int velX;
 
 	private BufferedImage image;
 
@@ -16,11 +17,20 @@ public class Player {
 		image = game.sheet.grabImage(0, 0);
 
 		x = 100;
-		y = 100;
+		y = 700;
+		velX = 0;
 	}
 
 	public void tick() {
-		++x;
+		x += velX;
+	}
+
+	public void goLeft() {
+		velX += -1;
+	}
+
+	public void goRight() {
+		velX += 1;
 	}
 
 	public void render(Graphics g) {
