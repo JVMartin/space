@@ -31,7 +31,23 @@ public class Star {
 	}
 
 	private void shared() {
-		color = Color.white;
+		switch (ToolBelt.randomBetween(0, 3)) {
+			case 0:
+				color = new Color(0xC6C6C6);
+				break;
+			case 1:
+				color = new Color(0x9D857C);
+				break;
+			case 2:
+				color = new Color(0x768799);
+				break;
+			case 3:
+				color = new Color(0x76765A);
+				break;
+			case 4:
+				color = new Color(0x8A6A6F);
+				break;
+		};
 		size = ToolBelt.randomBetween(1, 3);
 		velY = size * ToolBelt.rand.nextFloat();
 		velY += ToolBelt.rand.nextFloat() * ToolBelt.randomBetween(0, 2);
