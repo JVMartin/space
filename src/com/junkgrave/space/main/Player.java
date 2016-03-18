@@ -24,8 +24,8 @@ public class Player {
 	public void tick() {
 		if (velX < 0 && x <= 0) {
 			x = 0;
-		} else if (velX > 0 && x >= game.getWidth() - 32) {
-			x = game.getWidth() - 32;
+		} else if (velX > 0 && x >= Game.width - 32) {
+			x = Game.width - 32;
 		} else {
 			x += velX;
 		}
