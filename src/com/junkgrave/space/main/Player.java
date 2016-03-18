@@ -4,9 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player {
-	private int x;
-	private int y;
-	private int velX;
+	private double x;
+	private double y;
+	private double accX;
+	private double velX;
+	private double velXMax;
 
 	private BufferedImage straight;
 	private BufferedImage left;
@@ -16,43 +18,59 @@ public class Player {
 		straight = sheet.grabImage(39, 0, 39, 37);
 		left     = sheet.grabImage(0, 0, 29, 37);
 		right    = sheet.grabImage(86, 0, 29, 37);
-
-		x = 100;
-		y = 700;
-		velX = 0;
+		x        = 100;
+		y        = 700;
+		accX     = 0.1;
+		velX     = 0;
+		velXMax  = 5;
 	}
 
 	public void tick() {
-		if (velX < 0 && x <= 0) {
+		if (Keys.left) {
+			velX -= accX;
+			if (velX <  -velXMax) {
+				velX = -velXMax;
+			}
+		}
+		else if (Keys.right) {
+			velX += accX;
+			if (velX > velXMax) {
+				velX = velXMax;
+			}
+		}
+		else {
+			if (velX > 0) {
+				velX -= accX * 2;
+				if (velX < 0) {
+					velX = 0;
+				}
+			}
+			else if (velX < 0) {
+				velX += accX * 2;
+				if (velX > 0) {
+					velX = 0;
+				}
+			}
+		}
+		x += velX;
+		/*if (velX < 0 && x <= 0) {
 			x = 0;
 		} else if (velX > 0 && x >= Game.width - 32) {
 			x = Game.width - 32;
 		} else {
 			x += velX;
-		}
-	}
-
-	public void goLeft() {
-		velX = -4;
-	}
-
-	public void goRight() {
-		velX = 4;
-	}
-
-	public void stop() {
-		velX = 0;
+		}*/
 	}
 
 	public void render(Graphics g) {
-		if (velX == 0) {
-			g.drawImage(straight, x, y, null);
+		if (Keys.left) {
+			g.drawImage(left, (int) x, (int) y, null);
 		}
-		else if (velX < 0) {
-			g.drawImage(left, x, y, null);
+		else if (Keys.right) {
+			g.drawImage(right, (int) x, (int) y, null);
 		}
 		else {
-			g.drawImage(right, x, y, null);
+			g.drawImage(straight, (int) x, (int) y, null);
 		}
 	}
 }

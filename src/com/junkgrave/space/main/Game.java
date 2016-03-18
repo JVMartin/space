@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 		player = new Player(sheet);
 		stars  = new Stars(70);
 
-		addKeyListener(new KeyListener(this));
+		addKeyListener(new Keys());
 	}
 
 	private synchronized void start() {
@@ -113,40 +113,6 @@ public class Game extends Canvas implements Runnable {
 		player.render(g);
 		g.dispose();
 		bs.show();
-	}
-
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		switch (key) {
-			case KeyEvent.VK_LEFT:
-				player.goLeft();
-				break;
-			case KeyEvent.VK_RIGHT:
-				player.goRight();
-				break;
-			case KeyEvent.VK_UP:
-				break;
-			case KeyEvent.VK_DOWN:
-				break;
-		}
-	}
-
-	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		switch (key) {
-			case KeyEvent.VK_LEFT:
-				player.stop();
-				break;
-			case KeyEvent.VK_RIGHT:
-				player.stop();
-				break;
-			case KeyEvent.VK_UP:
-				break;
-			case KeyEvent.VK_DOWN:
-				break;
-		}
 	}
 
 	public static void main(String [] args) {
