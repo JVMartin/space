@@ -4,17 +4,18 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player {
-	private Game game;
 	private int x;
 	private int y;
 	private int velX;
 
-	private BufferedImage image;
+	private BufferedImage straight;
+	private BufferedImage left;
+	private BufferedImage right;
 
-	public Player(Game game) {
-		this.game = game;
-
-		image = game.sheet.grabImage(0, 0);
+	public Player(SpriteSheet sheet) {
+		straight = sheet.grabImage(39, 0, 39, 37);
+		left     = sheet.grabImage(0, 0, 29, 37);
+		right    = sheet.grabImage(86, 0, 29, 37);
 
 		x = 100;
 		y = 700;
@@ -32,11 +33,11 @@ public class Player {
 	}
 
 	public void goLeft() {
-		velX += -1;
+		velX = -5;
 	}
 
 	public void goRight() {
-		velX += 1;
+		velX = 5;
 	}
 
 	public void stop() {
@@ -44,6 +45,14 @@ public class Player {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(image, x, y, null);
+		if (velX == 0) {
+			g.drawImage(straight, x, y, null);
+		}
+		else if (velX < 0) {
+			g.drawImage(left, x, y, null);
+		}
+		else {
+			g.drawImage(right, x, y, null);
+		}
 	}
 }

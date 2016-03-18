@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	public SpriteSheet sheet;
+	private SpriteSheet sheet;
 
 	private Player player;
 
@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
 		setMaximumSize(new Dimension(width, height));
 
 		sheet  = new SpriteSheet("/sheet.png");
-		player = new Player(this);
+		player = new Player(sheet);
 
 		addKeyListener(new KeyListener(this));
 	}

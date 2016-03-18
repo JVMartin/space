@@ -5,9 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class SpriteSheet {
-	private final int width  = 32;
-	private final int height = 32;
-
 	private BufferedImage image;
 
 	public SpriteSheet(String path) {
@@ -18,7 +15,7 @@ public class SpriteSheet {
 		}
 	}
 
-	public BufferedImage grabImage(int x, int y) {
-		return image.getSubimage(width * x, height * y, width, height);
+	public BufferedImage grabImage(int x, int y, int width, int height) {
+		return image.getSubimage(x, y, width, height);
 	}
 }
