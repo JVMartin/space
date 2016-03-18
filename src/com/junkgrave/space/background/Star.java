@@ -47,7 +47,7 @@ public class Star {
 			case 4:
 				color = new Color(0x8A6A6F);
 				break;
-		};
+		}
 		size = ToolBelt.randomBetween(1, 3);
 		velY = size * ToolBelt.rand.nextFloat();
 		velY += ToolBelt.rand.nextFloat() * ToolBelt.randomBetween(0, 2);
