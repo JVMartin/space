@@ -22,7 +22,7 @@ public class Player {
 		y        = 700;
 		accX     = 0.1;
 		velX     = 0;
-		velXMax  = 5;
+		velXMax  = 4;
 	}
 
 	public void tick() {
@@ -39,6 +39,7 @@ public class Player {
 			}
 		}
 		else {
+			// Decelerate towards 0.
 			if (velX > 0) {
 				velX -= accX * 2;
 				if (velX < 0) {
@@ -53,13 +54,6 @@ public class Player {
 			}
 		}
 		x += velX;
-		/*if (velX < 0 && x <= 0) {
-			x = 0;
-		} else if (velX > 0 && x >= Game.width - 32) {
-			x = Game.width - 32;
-		} else {
-			x += velX;
-		}*/
 	}
 
 	public void render(Graphics g) {

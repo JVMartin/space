@@ -127,5 +127,6 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 
 		game.start();
+		game.requestFocus();
 	}
 }
