@@ -4,11 +4,11 @@ import com.junkgrave.space.background.Stars;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
+
 	public static final int width     = 800;
 	public static final int height    = 800;
 	public static final String title  = "Space Time 2000";

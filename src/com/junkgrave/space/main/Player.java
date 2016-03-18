@@ -1,14 +1,17 @@
 package com.junkgrave.space.main;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Player {
+
 	private double x;
 	private double y;
 	private double accX;
 	private double velX;
 	private double velXMax;
+	private int keyX;
 
 	private BufferedImage straight;
 	private BufferedImage left;
@@ -26,45 +29,64 @@ public class Player {
 	}
 
 	public void tick() {
-		if (Keys.left) {
-			velX -= accX;
-			if (velX <  -velXMax) {
-				velX = -velXMax;
-			}
+		// Find out which arrow key was hit most recently, left or right?
+		int leftKey  = Keys.indexOf(KeyEvent.VK_LEFT);
+		int rightKey = Keys.indexOf(KeyEvent.VK_RIGHT);
+
+		if (leftKey > rightKey) {
+			keyX = KeyEvent.VK_LEFT;
 		}
-		else if (Keys.right) {
-			velX += accX;
-			if (velX > velXMax) {
-				velX = velXMax;
-			}
+		else if (leftKey < rightKey) {
+			keyX = KeyEvent.VK_RIGHT;
 		}
 		else {
-			// Decelerate towards 0.
-			if (velX > 0) {
-				velX -= accX * 2;
-				if (velX < 0) {
-					velX = 0;
-				}
-			}
-			else if (velX < 0) {
-				velX += accX * 2;
-				if (velX > 0) {
-					velX = 0;
-				}
-			}
+			keyX = -1;
 		}
+
+		switch(keyX) {
+			case KeyEvent.VK_LEFT:
+				velX -= accX;
+				if (velX <  -velXMax) {
+					velX = -velXMax;
+				}
+				break;
+			case KeyEvent.VK_RIGHT:
+				velX += accX;
+				if (velX > velXMax) {
+					velX = velXMax;
+				}
+				break;
+			case -1:
+				// Decelerate towards 0.
+				if (velX > 0) {
+					velX -= accX * 2;
+					if (velX < 0) {
+						velX = 0;
+					}
+				}
+				else if (velX < 0) {
+					velX += accX * 2;
+					if (velX > 0) {
+						velX = 0;
+					}
+				}
+				break;
+		}
+
 		x += velX;
 	}
 
 	public void render(Graphics g) {
-		if (Keys.left) {
-			g.drawImage(left, (int) x, (int) y, null);
-		}
-		else if (Keys.right) {
-			g.drawImage(right, (int) x, (int) y, null);
-		}
-		else {
-			g.drawImage(straight, (int) x, (int) y, null);
+		switch(keyX) {
+			case KeyEvent.VK_LEFT:
+				g.drawImage(left, (int) x, (int) y, null);
+				break;
+			case KeyEvent.VK_RIGHT:
+				g.drawImage(right, (int) x, (int) y, null);
+				break;
+			case -1:
+				g.drawImage(straight, (int) x, (int) y, null);
+				break;
 		}
 	}
 }

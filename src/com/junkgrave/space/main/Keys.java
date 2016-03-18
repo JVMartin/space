@@ -2,44 +2,32 @@ package com.junkgrave.space.main;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Keys extends KeyAdapter {
 
-	public static boolean left;
-	public static boolean right;
-	public static boolean space;
+	public static ArrayList<Integer> keys = new ArrayList<>();
+
+	public static int indexOf(Integer keyCode) {
+		for (int i = 0; i < keys.size(); ++i) {
+			if (keys.get(i).equals(keyCode)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
+		Integer key = e.getKeyCode();
 
-		switch (key) {
-			case KeyEvent.VK_LEFT:
-				left = true;
-				break;
-			case KeyEvent.VK_RIGHT:
-				right = true;
-				break;
-			case KeyEvent.VK_UP:
-				break;
-			case KeyEvent.VK_DOWN:
-				break;
-		}
+		if (keys.contains(key)) return;
+
+		keys.add(key);
 	}
 
 	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
+		Integer key = e.getKeyCode();
 
-		switch (key) {
-			case KeyEvent.VK_LEFT:
-				left = false;
-				break;
-			case KeyEvent.VK_RIGHT:
-				right = false;
-				break;
-			case KeyEvent.VK_UP:
-				break;
-			case KeyEvent.VK_DOWN:
-				break;
-		}
+		keys.remove(key);
 	}
 }
