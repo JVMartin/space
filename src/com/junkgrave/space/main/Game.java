@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 
 		sheet  = new SpriteSheet("/sheet.png");
 		player = new Player(sheet);
-		stars  = new Stars(50);
+		stars  = new Stars(70);
 
 		addKeyListener(new KeyListener(this));
 	}

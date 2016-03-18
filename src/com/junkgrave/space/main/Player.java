@@ -33,11 +33,11 @@ public class Player {
 	}
 
 	public void goLeft() {
-		velX = -5;
+		velX = -4;
 	}
 
 	public void goRight() {
-		velX = 5;
+		velX = 4;
 	}
 
 	public void stop() {

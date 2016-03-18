@@ -11,7 +11,6 @@ public class Stars {
 		this.numberOfStars = numberOfStars;
 		stars = new Star[numberOfStars];
 		for (int i = 0; i < stars.length; ++i) {
-			System.out.println(i);
 			stars[i] = new Star();
 		}
 	}

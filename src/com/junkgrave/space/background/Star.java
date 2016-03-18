@@ -7,9 +7,10 @@ import java.awt.*;
 
 public class Star {
 	private int x;
-	private int y;
-	private int velY;
+	private double y;
+	private double velY;
 	private int size;
+	private Color color;
 
 	public Star() {
 		init();
@@ -25,21 +26,25 @@ public class Star {
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.white);
-		g.fillRect(x, y, size, size);
+		g.setColor(color);
+		g.fillRect(x, (int) y, size, size);
+	}
+
+	private void shared() {
+		color = Color.white;
+		size = ToolBelt.randomBetween(1, 3);
+		velY = size * ToolBelt.rand.nextFloat();
+		velY += ToolBelt.rand.nextFloat() * ToolBelt.randomBetween(0, 2);
+		x = ToolBelt.randomBetween(0, Game.width);
 	}
 
 	private void init() {
-		size = ToolBelt.randomBetween(1, 4);
-		velY = ToolBelt.randomBetween(1, 10);
-		x = ToolBelt.randomBetween(0, Game.width);
+		shared();
 		y = ToolBelt.randomBetween(0, Game.height);
 	}
 
 	private void reset() {
-		size = ToolBelt.randomBetween(1, 4);
-		velY = ToolBelt.randomBetween(1, 10);
-		x = ToolBelt.randomBetween(0, Game.width);
+		shared();
 		y = -1 * size;
 	}
 }
