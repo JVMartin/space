@@ -1,5 +1,7 @@
 package com.junkgrave.space.main;
 
+import com.junkgrave.space.background.Stars;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,6 +20,7 @@ public class Game extends Canvas implements Runnable {
 	private SpriteSheet sheet;
 
 	private Player player;
+	private Stars stars;
 
 	public Game() {
 		setPreferredSize(new Dimension(width, height));
@@ -26,6 +29,7 @@ public class Game extends Canvas implements Runnable {
 
 		sheet  = new SpriteSheet("/sheet.png");
 		player = new Player(sheet);
+		stars  = new Stars(50);
 
 		addKeyListener(new KeyListener(this));
 	}
@@ -92,6 +96,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		stars.tick();
 		player.tick();
 	}
 
@@ -104,6 +109,7 @@ public class Game extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		stars.render(g);
 		player.render(g);
 		g.dispose();
 		bs.show();
