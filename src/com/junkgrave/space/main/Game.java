@@ -73,13 +73,11 @@ public class Game extends Canvas implements Runnable {
 		while (running) {
 			long now = System.nanoTime();
 
-			// The body of this if-block is executed at most 60 times per second.
-			if (now - nextTick >= 0) {
-				do {
-					nextTick += perTick;
-					tick();
-					++tps;
-				} while (now - nextTick >= 0);
+			// The body of this while loop is executed at most 60 times per second.
+			while (now - nextTick >= 0) {
+				nextTick += perTick;
+				tick();
+				++tps;
 			}
 
 			render();
@@ -115,7 +113,7 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 
-	public static void main(String [] args) {
+	public static void main(String [] args) throws InterruptedException {
 		Game game = new Game();
 
 		JFrame frame = new JFrame(title);
@@ -128,5 +126,10 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 		game.requestFocus();
+
+		while (true) {
+			System.out.println("This is a 2nd thread!");
+			Thread.sleep(1000);
+		}
 	}
 }
