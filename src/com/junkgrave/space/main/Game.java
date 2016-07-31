@@ -1,6 +1,6 @@
 package com.junkgrave.space.main;
 
-import com.junkgrave.space.background.Stars;
+import com.junkgrave.space.background.Star;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +13,13 @@ public class Game extends Canvas implements Runnable {
 	public static final int height    = 800;
 	public static final String title  = "Space Time 2000";
 
+	public static EntityManager entityManager = new EntityManager();
+
 	private boolean running = false;
 	private Thread thread;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private SpriteSheet sheet;
-
-	private Player player;
-	private Stars stars;
 
 	public Game() {
 		setPreferredSize(new Dimension(width, height));
@@ -28,8 +27,10 @@ public class Game extends Canvas implements Runnable {
 		setMaximumSize(new Dimension(width, height));
 
 		sheet  = new SpriteSheet("/sheet.png");
-		player = new Player(sheet);
-		stars  = new Stars(70);
+		entityManager.addEntity(new Player(sheet));
+		for (int i = 0; i < 70; ++i) {
+			entityManager.addEntity(new Star());
+		}
 
 		addKeyListener(new Keys());
 	}
@@ -94,8 +95,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		stars.tick();
-		player.tick();
+		entityManager.tick();
 	}
 
 	private void render() {
@@ -107,8 +107,7 @@ public class Game extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-		stars.render(g);
-		player.render(g);
+		entityManager.render(g);
 		g.dispose();
 		bs.show();
 	}

@@ -1,14 +1,13 @@
 package com.junkgrave.space.background;
 
+import com.junkgrave.space.main.Entity;
 import com.junkgrave.space.main.Game;
 import com.junkgrave.space.main.ToolBelt;
 
 import java.awt.*;
 
-public class Star {
-	private int x;
-	private double y;
-	private double velY;
+public class Star extends Entity {
+
 	private int size;
 	private Color color;
 
@@ -27,7 +26,7 @@ public class Star {
 
 	public void render(Graphics g) {
 		g.setColor(color);
-		g.fillRect(x, (int) y, size, size);
+		g.fillRect((int) x, (int) y, size, size);
 	}
 
 	private void shared() {

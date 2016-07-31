@@ -4,12 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Player {
+public class Player extends Entity {
 
-	private double x;
-	private double y;
-	private double accX;
-	private double velX;
 	private double velXMax;
 	private int keyX;
 
@@ -74,6 +70,7 @@ public class Player {
 		}
 
 		x += velX;
+		shoot();
 	}
 
 	public void render(Graphics g) {
@@ -89,4 +86,12 @@ public class Player {
 				break;
 		}
 	}
+
+	public void shoot() {
+		if (Keys.indexOf(KeyEvent.VK_SPACE) == -1) return;
+
+		Game.entityManager.addEntity(new Laser(x + 8, y + 9));
+		Game.entityManager.addEntity(new Laser(x + 29, y + 9));
+	}
+
 }
