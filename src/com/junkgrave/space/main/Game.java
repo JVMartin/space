@@ -9,9 +9,10 @@ import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
 
-	public static final int width     = 800;
-	public static final int height    = 800;
-	public static final String title  = "Space Time 2000";
+	public static final int width      = 800;
+	public static final int height     = 800;
+	public static final int desiredTPS = 60;
+	public static final String title   = "Space Time 2000";
 
 	public static EntityManager entityManager = new EntityManager();
 
@@ -58,9 +59,6 @@ public class Game extends Canvas implements Runnable {
 	public void run() {
 		long nextTick, secondTimer;
 		nextTick = secondTimer = System.nanoTime();
-
-		// Desired ticks per second.
-		final long desiredTPS = 60;
 
 		// Number of nanoseconds that need to pass between each tick.
 		final long perTick = 1000000000 / desiredTPS;

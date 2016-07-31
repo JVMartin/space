@@ -13,6 +13,8 @@ public class Player extends Entity {
 	private BufferedImage left;
 	private BufferedImage right;
 
+	int lastLaser;
+
 	public Player(SpriteSheet sheet) {
 		straight = sheet.grabImage(39, 0, 39, 37);
 		left     = sheet.grabImage(0, 0, 29, 37);
@@ -88,10 +90,14 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
+		if (--lastLaser < 0) lastLaser = 0;
 		if (Keys.indexOf(KeyEvent.VK_SPACE) == -1) return;
 
-		Game.entityManager.addEntity(new Laser(x + 8, y + 9));
-		Game.entityManager.addEntity(new Laser(x + 29, y + 9));
+		if (lastLaser == 0) {
+			Game.entityManager.addEntity(new Laser(x + 8, y + 9));
+			Game.entityManager.addEntity(new Laser(x + 29, y + 9));
+			lastLaser = Game.desiredTPS / 4;
+		}
 	}
 
 }
