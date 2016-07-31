@@ -7,10 +7,12 @@ public class Laser extends Entity {
 	public Laser(double x, double y) {
 		this.x = x;
 		this.y = y;
+
+		this.velY = -4;
 	}
 
 	public void tick() {
-		--y;
+		y += velY;
 	}
 
 	public void render(Graphics g) {

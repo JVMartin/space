@@ -1,25 +1,42 @@
 package com.junkgrave.space.main;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.ListIterator;
+import java.util.List;
+import java.util.Stack;
 
 public class EntityManager {
-	private ArrayList<Entity> entities = new ArrayList<>();
+	/**
+	 * A list of active entities.
+	 */
+	private List<Entity> entities = new ArrayList<>();
+
+	/**
+	 * When adding an entity, first put it in this buffer to be added at the
+	 * end of the tick.
+	 */
+	private Stack<Entity> entityBuffer = new Stack<>();
 
 	public void addEntity(Entity e) {
-		entities.add(e);
+		entityBuffer.push(e);
 	}
 
-	public void tick() {
-		for (int i = 0; i < entities.size(); ++i) {
-			entities.get(i).tick();
+	public void flushBuffer() {
+		while ( ! entityBuffer.isEmpty()) {
+			entities.add(entityBuffer.pop());
 		}
 	}
 
+	public void tick() {
+		for (Entity e : entities) {
+			e.tick();
+		}
+		flushBuffer();
+	}
+
 	public void render(Graphics g) {
-		for (int i = 0; i < entities.size(); ++i) {
-			entities.get(i).render(g);
+		for (Entity e : entities) {
+			e.render(g);
 		}
 	}
 
